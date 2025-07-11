@@ -1,8 +1,9 @@
+import Header from "./components/header"
 
 function App() {
   return (
-    <div className='bg-gray-500'>
-      test
+    <div className='bg-background text-on-background'>
+      <Header />
     </div>
   )
 }

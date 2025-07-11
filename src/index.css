@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
-body{
+@theme {
+  --color-background: rgba(255, 255, 255, 1);
+  --color-on-background: rgba(84, 84, 84, 1);
+  --color-primary: rgba(96, 159, 255, 1);
+  --color-on-primary: rgba(255, 255, 255, 1);
+  --color-border: rgba(222, 222, 222, 1)
+}
+
+body {
   margin: 0;
   padding: 0;
+  font-family: Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
