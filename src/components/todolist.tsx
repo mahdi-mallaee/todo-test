@@ -48,25 +48,33 @@ export default function TodoList({ onEdit }: { onEdit: (todo: Todo) => void }) {
         <div>
           {
             showCompleted ?
-              todolist.filter(todo => todo.completed).map(todo => (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  onRemove={handleTodoDelete}
-                  onEdit={onEdit}
-                  onCheck={handleTodoCheck} />
-              )) :
-              todolist.filter(todo => !todo.completed).map(todo => (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  onRemove={handleTodoDelete}
-                  onEdit={onEdit}
-                  onCheck={handleTodoCheck} />
-              ))
+
+              todolist.filter(todo => todo.completed).length > 0 ?
+                todolist.filter(todo => todo.completed).map(todo => (
+                  <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    onRemove={handleTodoDelete}
+                    onEdit={onEdit}
+                    onCheck={handleTodoCheck} />
+                ))
+                :
+                <h3 className="text-gray-500 text-center text-lg">No completed tasks</h3>
+              :
+              todolist.filter(todo => !todo.completed).length > 0 ?
+                todolist.filter(todo => !todo.completed).map(todo => (
+                  <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    onRemove={handleTodoDelete}
+                    onEdit={onEdit}
+                    onCheck={handleTodoCheck} />
+                ))
+                :
+                <h3 className="text-gray-500 text-center text-lg">No incomplete tasks</h3>
           }
         </div>
       </div>
-    </div>
+    </div >
   );
 } 
