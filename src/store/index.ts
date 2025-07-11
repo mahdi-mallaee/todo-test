@@ -13,8 +13,11 @@ import {
 import storage from 'redux-persist/lib/storage'
 import todolist from './todolist'
 
+import todoDialog from './todoDialog'
+
 const reducer = combineReducers({
-  todolist: todolist
+  todolist: todolist,
+  todoDialog: todoDialog
 })
 
 const persistConfig = {

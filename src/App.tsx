@@ -1,37 +1,33 @@
-import { useState } from "react";
 import Fab from "./components/fab"
 import Header from "./components/header"
 import TodoList from "./components/todolist"
 import TodoDialog from "./components/todoDialog";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTodo, editTodo } from "./store/todolist";
+import { openAddDialog, openEditDialog, closeDialog } from "./store/todoDialog";
 import type { Todo } from "./difinitions";
+import type { RootState } from "./store";
+
 
 function App() {
-  const [showTodoDialog, setShowTodoDialog] = useState(false);
-  const [TodoDialogState, setTodoDialogState] = useState<"add" | "edit">("add");
-  const [todo, setTodo] = useState<Todo | null>(null);
   const dispatch = useDispatch();
+  const todoDialog = useSelector((state: RootState) => state.todoDialog);
 
   function handleSubmit(title: string) {
-    if (TodoDialogState === "add") {
+    if (todoDialog.mode === "add") {
       dispatch(addTodo({ id: Date.now(), title, completed: false }));
-    } else if (TodoDialogState === "edit" && todo) {
-      dispatch(editTodo({ ...todo, title }));
+    } else if (todoDialog.mode === "edit" && todoDialog.selectedTodo.id) {
+      dispatch(editTodo({...todoDialog.selectedTodo, title }));
     }
-    onClose()
+    dispatch(closeDialog());
   }
 
   function onEdit(_todo: Todo) {
-    setTodoDialogState("edit");
-    setShowTodoDialog(true);
-    setTodo(_todo);
+    dispatch(openEditDialog(_todo));
   }
 
   function onClose() {
-    setShowTodoDialog(false);
-    setTodoDialogState("add");
-    setTodo(null);
+    dispatch(closeDialog());
   }
 
   return (
@@ -41,13 +37,13 @@ function App() {
       <div className='relative flex flex-col gap-10'>
         <Header />
         <TodoList onEdit={onEdit} />
-        <Fab onClick={() => setShowTodoDialog(true)} />
-        {showTodoDialog &&
+        <Fab onClick={() => dispatch(openAddDialog())} />
+        {todoDialog.open &&
           <TodoDialog
             onSubmit={handleSubmit}
             onClose={onClose}
-            state={TodoDialogState}
-            todoTitle={todo?.title} />
+            state={todoDialog.mode}
+            todoTitle={todoDialog.selectedTodo.title} />
         }
       </div>
     </div>
