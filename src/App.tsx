@@ -1,13 +1,15 @@
 import Fab from "./components/fab"
 import Header from "./components/header"
+import TodoList from "./components/todolist"
 
 function App() {
   return (
     <div className='relative bg-background text-on-background min-h-screen'>
       <div
         className='absolute h-full bg-[url("./assets/bg-tile.png")] bg-repeat inset-0 opacity-10 pointer-events-none ' />
-      <div className='relative'>
+      <div className='relative flex flex-col gap-10'>
         <Header />
+        <TodoList />
         <Fab />
       </div>
     </div>
