@@ -3,13 +3,15 @@ import Fab from "./components/fab"
 import Header from "./components/header"
 import TodoList from "./components/todolist"
 import AddTodoDialog from "./components/todoDialog";
+import { useDispatch } from "react-redux";
+import { addTodo } from "./store/todolist";
 
 function App() {
   const [showAddTodo, setShowAddTodo] = useState(false);
+  const dispatch = useDispatch();
 
   function handleAddTodo(title: string) {
-    // Logic to add todo
-    console.log("Adding todo:", title);
+    dispatch(addTodo({ id: Date.now(), title, completed: false }));
     setShowAddTodo(false);
   }
 
