@@ -5,9 +5,7 @@ import TodoDialog from "./components/todoDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo, editTodo } from "./store/todolist";
 import { openAddDialog, openEditDialog, closeDialog } from "./store/todoDialog";
-import type { Todo } from "./difinitions";
 import type { RootState } from "./store";
-
 
 function App() {
   const dispatch = useDispatch();
@@ -17,16 +15,8 @@ function App() {
     if (todoDialog.mode === "add") {
       dispatch(addTodo({ id: Date.now(), title, completed: false }));
     } else if (todoDialog.mode === "edit" && todoDialog.selectedTodo.id) {
-      dispatch(editTodo({...todoDialog.selectedTodo, title }));
+      dispatch(editTodo({ ...todoDialog.selectedTodo, title }));
     }
-    dispatch(closeDialog());
-  }
-
-  function onEdit(_todo: Todo) {
-    dispatch(openEditDialog(_todo));
-  }
-
-  function onClose() {
     dispatch(closeDialog());
   }
 
@@ -36,12 +26,12 @@ function App() {
         className='absolute h-full bg-[url("./assets/bg-tile.png")] bg-repeat inset-0 opacity-10 pointer-events-none ' />
       <div className='relative flex flex-col gap-10'>
         <Header />
-        <TodoList onEdit={onEdit} />
+        <TodoList onEdit={(todo) => dispatch(openEditDialog(todo))} />
         <Fab onClick={() => dispatch(openAddDialog())} />
         {todoDialog.open &&
           <TodoDialog
             onSubmit={handleSubmit}
-            onClose={onClose}
+            onClose={() => dispatch(closeDialog())}
             state={todoDialog.mode}
             todoTitle={todoDialog.selectedTodo.title} />
         }
