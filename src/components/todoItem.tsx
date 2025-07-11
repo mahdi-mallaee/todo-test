@@ -16,12 +16,12 @@ export default function TodoItem({ todo, onRemove, onEdit, onCheck }: TodoItemPr
           onCheck({ ...todo, completed: !todo.completed });
         }}>
         {todo.completed &&
-          <span className="flex items-center justify-center w-full h-full bg-green-500 rounded-full">
+          <span className="flex items-center justify-center w-full h-full bg-success rounded-full">
             <MdCheck className="h-4 w-4 text-white" />
           </span>
         }
       </span>
-      <h3 className={`text-lg grow font-semibold ${todo.completed ? "line-through text-gray-400" : ""}`}>
+      <h3 className={`text-md grow ${todo.completed ? "line-through text-gray-400" : ""}`}>
         {todo.title}
       </h3>
       {!todo.completed &&

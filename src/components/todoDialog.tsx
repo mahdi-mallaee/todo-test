@@ -32,7 +32,7 @@ export default function TodoDialog({ onSubmit, onClose, state, todoTitle }: Todo
           <input
             type="text"
             placeholder="Do something!"
-            className="border-b border-divider outline-none p-2 w-full mb-4"
+            className="border-b border-divider outline-none p-2 w-full my-6"
             value={title}
             onChange={e => {
               setTitle(e.target.value)

@@ -22,16 +22,14 @@ export default function TodoList({ onEdit }: { onEdit: (todo: Todo) => void }) {
 
   return (
     <div className="flex grow justify-center">
-
       <div className="w-full max-w-5xl bg-background p-10 rounded-3xl shadow-md flex flex-col gap-5">
 
         <div className="flex justify-between items-center">
-
           <div className="flex items-center gap-2">
-            <div>{date.getDate()}</div>
-            <div>
-              <div>{date.toLocaleDateString("en", { month: "short" })}</div>
-              <div>{date.getFullYear()}</div>
+            <div className="text-5xl text-black">{date.getDate()}</div>
+            <div className="flex flex-col ">
+              <div className="text-black text-xl">{date.toLocaleDateString("en", { month: "short" })}</div>
+              <div className="text-sm">{date.getFullYear()}</div>
             </div>
           </div>
 
@@ -45,7 +43,6 @@ export default function TodoList({ onEdit }: { onEdit: (todo: Todo) => void }) {
               Completed Tasks
             </div>
           </div>
-
         </div>
 
         <div>
@@ -69,10 +66,7 @@ export default function TodoList({ onEdit }: { onEdit: (todo: Todo) => void }) {
               ))
           }
         </div>
-
       </div>
-
-
     </div>
   );
 } 
