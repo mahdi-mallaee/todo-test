@@ -4,11 +4,13 @@ import type { RootState } from "../store";
 import TodoItem from "./todoItem";
 import { editTodo, removeTodo } from "../store/todolist";
 import type { Todo } from "../difinitions";
+import { useState } from "react";
 
-export default function TodoList({onEdit}: { onEdit: (todo: Todo) => void }) {
+export default function TodoList({ onEdit }: { onEdit: (todo: Todo) => void }) {
   const date = useDate();
   const todolist = useSelector((state: RootState) => state.todolist);
   const dispatch = useDispatch();
+  const [showCompleted, setShowCompleted] = useState(false);
 
   function handleTodoDelete(id: number) {
     dispatch(removeTodo(id))
@@ -34,20 +36,38 @@ export default function TodoList({onEdit}: { onEdit: (todo: Todo) => void }) {
           </div>
 
           <div className="flex gap-2">
-            <div>Incomplete Tasks</div>
-            <div>Completed Tasks</div>
+            <div className={`${!showCompleted ? "text-primary" : ""} cursor-pointer`}
+              onClick={() => setShowCompleted(false)}>
+              Incomplete Tasks
+            </div>
+            <div className={`${showCompleted ? "text-primary" : ""} cursor-pointer`}
+              onClick={() => setShowCompleted(true)}>
+              Completed Tasks
+            </div>
           </div>
 
         </div>
 
         <div>
-          {todolist.map(todo => (
-            <TodoItem
-              todo={todo}
-              onEdit={onEdit}
-              onCheck={handleTodoCheck}
-              onRemove={handleTodoDelete} />
-          ))}
+          {
+            showCompleted ?
+              todolist.filter(todo => todo.completed).map(todo => (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onRemove={handleTodoDelete}
+                  onEdit={onEdit}
+                  onCheck={handleTodoCheck} />
+              )) :
+              todolist.filter(todo => !todo.completed).map(todo => (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onRemove={handleTodoDelete}
+                  onEdit={onEdit}
+                  onCheck={handleTodoCheck} />
+              ))
+          }
         </div>
 
       </div>
