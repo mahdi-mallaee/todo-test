@@ -16,11 +16,14 @@ export const todoSlice = createSlice({
             if (index !== -1) {
                 state[index] = { ...state[index], ...action.payload }
             }
+        },
+        removeTodo: (state, action: PayloadAction<number>) => {
+            return state.filter(todo => todo.id !== action.payload)
         }
     }
 })
 
-export const { addTodo, editTodo } = todoSlice.actions
+export const { addTodo, editTodo, removeTodo } = todoSlice.actions
 export const selectCart = (state: RootState) => state.todolist
 
 export default todoSlice.reducer

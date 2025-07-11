@@ -1,10 +1,22 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useDate from "../hooks/useDate";
 import type { RootState } from "../store";
+import TodoItem from "./todoItem";
+import { editTodo, removeTodo } from "../store/todolist";
+import type { Todo } from "../difinitions";
 
-export default function TodoList() {
+export default function TodoList({onEdit}: { onEdit: (todo: Todo) => void }) {
   const date = useDate();
   const todolist = useSelector((state: RootState) => state.todolist);
+  const dispatch = useDispatch();
+
+  function handleTodoDelete(id: number) {
+    dispatch(removeTodo(id))
+  }
+
+  function handleTodoCheck(todo: Todo) {
+    dispatch(editTodo(todo));
+  }
 
   return (
     <div className="flex grow justify-center">
@@ -30,10 +42,11 @@ export default function TodoList() {
 
         <div>
           {todolist.map(todo => (
-            <div key={todo.id} className="p-4 bg-white">
-              <h3 className="text-lg font-semibold">{todo.title}</h3>
-              <p className="text-sm text-gray-500">{todo.completed ? "Completed" : "Incomplete"}</p>
-            </div>
+            <TodoItem
+              todo={todo}
+              onEdit={onEdit}
+              onCheck={handleTodoCheck}
+              onRemove={handleTodoDelete} />
           ))}
         </div>
 

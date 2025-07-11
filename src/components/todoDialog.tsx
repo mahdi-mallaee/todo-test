@@ -1,7 +1,14 @@
 import { useState } from "react";
 
-export default function AddTodoDialog({ onSubmit, onClose }: { onSubmit?: (title: string) => void, onClose?: () => void }) {
-  const [title, setTitle] = useState("");
+interface TodoDialogProps {
+  onSubmit: (title: string) => void,
+  onClose: () => void,
+  state: "add" | "edit",
+  todoTitle?: string
+}
+
+export default function TodoDialog({ onSubmit, onClose, state, todoTitle }: TodoDialogProps) {
+  const [title, setTitle] = useState(() => todoTitle || "");
 
   function _onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -36,7 +43,7 @@ export default function AddTodoDialog({ onSubmit, onClose }: { onSubmit?: (title
               type="submit"
               className="text-primary cursor-pointer"
               onClick={_onSubmit}>
-              Add
+              {state === "add" ? "Add Todo" : "Edit Todo"}
             </button>
           </div>
         </form>
