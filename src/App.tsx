@@ -1,3 +1,4 @@
+import Fab from "./components/fab"
 import Header from "./components/header"
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
         className='absolute h-full bg-[url("./assets/bg-tile.png")] bg-repeat inset-0 opacity-10 pointer-events-none ' />
       <div className='relative'>
         <Header />
+        <Fab />
       </div>
     </div>
   )
